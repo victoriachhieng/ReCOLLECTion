@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import LandingView from '../LandingView/LandingView';
 
 class LoginPage extends Component {
   state = {
@@ -82,6 +83,7 @@ class LoginPage extends Component {
             Register
           </button>
         </center>
+        <LandingView />
       </div>
     );
   }
