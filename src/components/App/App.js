@@ -8,6 +8,8 @@ import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import Profiles from '../Profiles/Profiles';
+import AddProfile from '../AddProfile/AddProfile';
+import Favorites from '../Favorites/Favorites';
 import './App.css';
 
 class App extends Component {
@@ -56,6 +58,26 @@ class App extends Component {
               path="/profiles"
               component={Profiles}
               />
+            <ProtectedRoute
+              exact
+              path="/add profiles"
+              component={AddProfile}
+            />
+            <ProtectedRoute
+              exact
+              path="/add profiles"
+              component={AddProfile}
+            />
+            <ProtectedRoute
+              exact
+              path="/add profiles"
+              component={AddProfile}
+            />
+            <ProtectedRoute
+              exact
+              path="/favorites"
+              component={Favorites}
+            />
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
           </Switch>
