@@ -28,6 +28,9 @@ const Nav = props => (
           <Link className="nav-link" to="/add profiles">
             Add Profiles
           </Link>
+          <Link className="nav-link" to="/favorites">
+            Favorites
+          </Link>
           <LogOutButton className="nav-link" />
         </>
       )}
