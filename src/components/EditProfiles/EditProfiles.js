@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Edit from "@material-ui/icons/Edit";
+import BorderColor from "@material-ui/icons/BorderColor";
 
 class EditProfiles extends Component {
     render() {
@@ -12,7 +12,7 @@ class EditProfiles extends Component {
                 <br />
                 <div style={divContainer}>
                     <h1>Edit Profile</h1>
-                    <Edit/>
+                    <BorderColor/>
                     <br />
                     <br />
                     <center><input type="text" placeholder="Image URL" />
