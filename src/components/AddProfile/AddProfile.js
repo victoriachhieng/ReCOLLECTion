@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PersonAdd from "@material-ui/icons/PersonAdd";
 
 class AddProfile extends Component {
     render() {
@@ -11,6 +12,7 @@ class AddProfile extends Component {
         <br />
         <div style={divContainer}>
             <h1>Add Profile</h1>
+            <PersonAdd/>
             <br />
             <br />
             <center><input type="text" placeholder="Image URL" />
