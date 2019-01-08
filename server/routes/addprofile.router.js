@@ -48,8 +48,25 @@ router.post('/', (req, res) => {
       }
  });
 
+ // Delete a profile if it's something the logged in user deleted
+router.delete('/:id', (req, res) => {
+    if (req.isAuthenticated()) {
+    const reqId = req.params.id;
+    console.log('route id: ', reqId);
+    const queryText = `DELETE FROM "profiles" WHERE id=$1`;
+    pool.query(queryText, [reqId])
+        .then(result => {
+            res.sendStatus(204);
+        }).catch(error => {
+            console.log('in addprofile router delete', error);
+            res.sendStatus(500);
+            })
+    } else {
+     res.sendStatus(403);
+     } 
+ });
 
-// Delete a profile if it's something the logged in user deleted
+
 // router.delete('/:id', rejectUnauthenticated, (req, res) => {
 //     if(req.isAuthenticated()){
 //     let id = req.params.id;
