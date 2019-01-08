@@ -21,9 +21,9 @@ class Profiles extends Component {
     this.props.dispatch({ type: "FETCH_PROFILE" });
   };
 
-  handleDelete = () => {
-    console.log("in handleDelete");
-  };
+    handleDelete = (profile) => {
+        this.props.dispatch({ type: "DELETE_PROFILE", payload: profile.id });
+    };
 
   handleEdit = () => {
       this.props.history.push("/edit profiles");
@@ -71,7 +71,7 @@ class Profiles extends Component {
           </Tooltip>
           <Tooltip title="Delete">
             <IconButton aria-label="Delete">
-              <DeleteIcon onClick={this.handleDelete} style={btnStyle} />
+            <DeleteIcon onClick={() => this.handleDelete(profile)} style={btnStyle} />
             </IconButton>
           </Tooltip>
         </div>;
