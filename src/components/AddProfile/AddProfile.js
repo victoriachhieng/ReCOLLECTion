@@ -33,11 +33,12 @@ class AddProfile extends Component {
         this.setState({
             newProfile: ''
         })
-        alert('You have successfully submited a new Profile!')
+        this.props.history.push('/home');
+        alert(`You have successfully submitted a new Profile, let's check it out!`)
     };
 
     handleBackBtn = () => {
-        this.props.history.push('/profiles')
+        this.props.history.push('/home')
         alert('You will be directed back to the Profiles Page!')
     }
 
