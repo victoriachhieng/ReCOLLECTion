@@ -57,10 +57,10 @@ class Profiles extends Component {
             </IconButton>
           </Tooltip>
           <br />
-          <img src={profile.image} style={styleImage} alt="Profile created" />
+          <img src={profile.image_url} style={styleImage} alt="Profile created" />
           <h2>{profile.name}</h2>
           <p className="title">CEO & Founder, Example</p>
-          <p>Date of Encounter: {profile.date}</p>
+          <p>Date of Encounter: {profile.date_of_encounter}</p>
           <p>Location: {profile.location}</p>
           <p>Relation: {profile.relation}</p>
           <p>Misc Comments: {profile.misc}</p>
