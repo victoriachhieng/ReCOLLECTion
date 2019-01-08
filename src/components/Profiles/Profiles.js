@@ -9,7 +9,14 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import GroupAdd from "@material-ui/icons/GroupAdd";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
 
 class Profiles extends Component {
@@ -45,59 +52,95 @@ class Profiles extends Component {
   render() {
     // map of profiles
     let profileDisplay = this.props.newProfile.map(profile => {
-      return <div key={profile.id} className="card">
-          <Tooltip title="Favorite" placement="top">
-            <IconButton aria-label="Favorite">
-              <FavoriteBorder onClick={this.handleFavorite} style={btnStyle} />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Dislike" placement="top">
-            <IconButton aria-label="Dislike">
-              <ThumbDownAltSharp onClick={this.handleDislike} style={btnStyle} />
-            </IconButton>
-          </Tooltip>
-          <br />
-          <img src={profile.image} style={styleImage} alt="Profile created" />
-          <h2>{profile.name}</h2>
-          <p className="title">CEO & Founder, Example</p>
-          <p>Date of Encounter: {profile.date}</p>
-          <p>Location: {profile.location}</p>
-          <p>Relation: {profile.relation}</p>
-          <p>Misc Comments: {profile.misc}</p>
-          <Tooltip title="Edit">
-            <IconButton aria-label="Edit">
-              <BorderColor onClick={this.handleEdit} style={btnStyle} />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-            <DeleteIcon onClick={() => this.handleDelete(profile)} style={btnStyle} />
-            </IconButton>
-          </Tooltip>
-        </div>;
+      return <Card key={profile.id} style={styleCard}>
+          <CardActionArea>
+            <CardMedia component="img" alt="Profile created" height="240" image={profile.image_url} title="Profile created" />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                <h4>{profile.name}</h4>
+                <p className="title">CEO & Founder, Example</p>
+              </Typography>
+              <Typography component="p">
+                <b>Date of Encounter</b> - {profile.date_of_encounter}
+                <br />
+                <br />
+              </Typography>
+              <Typography component="p">
+                <b>Location</b> - {profile.location}
+                <br />
+                <br />
+                <b>Relation</b> - {profile.relation}
+                <br />
+                <br />
+                <b>Misc Comments</b> - {profile.misc}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Tooltip title="Favorite">
+              <IconButton aria-label="Favorite">
+                <FavoriteBorder onClick={this.handleFavorite} style={btnStyle} />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Dislike">
+              <IconButton aria-label="Dislike">
+                <ThumbDownAltSharp onClick={this.handleDislike} style={btnStyle} />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Edit">
+              <IconButton aria-label="Edit">
+                <BorderColor onClick={this.handleEdit} style={btnStyle} />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete">
+              <IconButton aria-label="Delete">
+                <DeleteIcon onClick={() => this.handleDelete(profile)} style={btnStyle} />
+              </IconButton>
+            </Tooltip>
+          </CardActions>
+        </Card>;
+        
     });
     return <div className="typewriter">
         <center>
           <h1>Welcome, {this.props.user.username} !</h1>
-          <br/>
+          <br />
           <h2>Profiles</h2>
-            <Button variant="contained" color="default" onClick={this.handleAddProfileBtn} >
-                Add New Profile
-            <GroupAdd/>
-            </Button>
+          <Button variant="contained" color="default" onClick={this.handleAddProfileBtn}>
+            Add New Profile
+            <GroupAdd />
+          </Button>
         </center>
-        {profileDisplay}
+        <Grid container item xs={12}>
+        <ul>
+          {profileDisplay}
+            </ul>
+        </Grid>
       </div>;
   }
 }
 const btnStyle = {
-    color: 'black',
-    justifyContent: 'space-between 10px'
+  color: "black",
 };
 
-const styleImage = {
-    width: '100%'
+const styleCard = {
+    overflow: 'hidden',
+    display: 'inline-block',
+    width: '20vw',
+    transitionDuration: '0.3s',
+    height: '45vw',
+    fontFamily: 'Arial, Helvetica, sans - serif',
+    margin: '25px',
+    textAlign: 'center'
 }
+
+
+const DATE_OPTIONS = {
+  weekday: "short",
+  year: "numeric",
+  month: "short",
+  day: "numeric"
+};
 
 const mapStateToProps = (reduxStore) => ({
     user: reduxStore.user,
