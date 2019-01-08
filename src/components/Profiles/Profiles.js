@@ -1,48 +1,107 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from "react-router-dom";
 import './Profiles.css';
 import BorderColor from "@material-ui/icons/BorderColor";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import ThumbDownAltSharp from "@material-ui/icons/ThumbDownAltSharp";
-import Delete from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import DeleteIcon from "@material-ui/icons/Delete";
+import GroupAdd from "@material-ui/icons/GroupAdd";
+import Button from "@material-ui/core/Button";
+
 
 class Profiles extends Component {
-    render() {
-        let multpleCards = <div className="card">
-            <FavoriteBorder style={btnStyle}/><ThumbDownAltSharp style={btnStyle}/>
-            <img src="https://avatars2.githubusercontent.com/u/40585011?s=460&v=4" alt="Profile created" style={styleImage} />
-            <h1>Victoria</h1>
-            <p className="title">CEO & Founder, Example</p>
-            <p>Date of Encounter: 10/11/2018</p>
-            <p>Location: Location of Encounter will go here!</p>
-            <p>Relation: Coworker, classmate, stranger danger!</p>
-            <p>
-                Misc comments: We have a lot in common, would love to get
-                to know Victoria more!
-            </p>
-            <BorderColor style={btnStyle}/><Delete style={btnStyle}/>
-            </div>
-        return <div>
-            <center>
-                <h1>Profiles</h1>
-            <button>Add New Profile</button>
-            </center>
-            {multpleCards}
-            {multpleCards}
-            {multpleCards}
-            {multpleCards}
-            {multpleCards}
-            {multpleCards}
-            {multpleCards}
-            {multpleCards}
-          </div>;
-    }
+  componentDidMount = () => {
+    this.fetchProfiles();
+  };
+
+  fetchProfiles = () => {
+    this.props.dispatch({ type: "FETCH_PROFILE" });
+  };
+
+  handleDelete = () => {
+    console.log("in handleDelete");
+  };
+
+  handleEdit = () => {
+      this.props.history.push("/edit profiles");
+  };
+
+  handleFavorite = () => {
+    console.log("in handleLike");
+  };
+
+  handleDislike = () => {
+    console.log("in handleDislike");
+  };
+
+  handleAddProfileBtn = () => {
+    this.props.history.push("/add profiles");
+    alert("Adding a New Profile!");
+  };
+
+  render() {
+    // map of profiles
+    let profileDisplay = this.props.newProfile.map(profile => {
+      return <div key={profile.id} className="card">
+          <Tooltip title="Favorite" placement="top">
+            <IconButton aria-label="Favorite">
+              <FavoriteBorder onClick={this.handleFavorite} style={btnStyle} />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Dislike" placement="top">
+            <IconButton aria-label="Dislike">
+              <ThumbDownAltSharp onClick={this.handleDislike} style={btnStyle} />
+            </IconButton>
+          </Tooltip>
+          <br />
+          <img src={profile.image} style={styleImage} alt="Profile created" />
+          <h2>{profile.name}</h2>
+          <p className="title">CEO & Founder, Example</p>
+          <p>Date of Encounter: {profile.date}</p>
+          <p>Location: {profile.location}</p>
+          <p>Relation: {profile.relation}</p>
+          <p>Misc Comments: {profile.misc}</p>
+          <Tooltip title="Edit">
+            <IconButton aria-label="Edit">
+              <BorderColor onClick={this.handleEdit} style={btnStyle} />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <IconButton aria-label="Delete">
+              <DeleteIcon onClick={this.handleDelete} style={btnStyle} />
+            </IconButton>
+          </Tooltip>
+        </div>;
+    });
+    return <div className="typewriter">
+        <center>
+          <h1>Welcome, {this.props.user.username} !</h1>
+          <br/>
+          <h2>Profiles</h2>
+            <Button variant="contained" color="default" onClick={this.handleAddProfileBtn} >
+                Add New Profile
+            <GroupAdd/>
+            </Button>
+        </center>
+        {profileDisplay}
+      </div>;
+  }
 }
 const btnStyle = {
-    margin: '30px'
-}
+    color: 'black',
+    justifyContent: 'space-between 10px'
+};
 
 const styleImage = {
     width: '100%'
 }
 
-export default Profiles;
+const mapStateToProps = (reduxStore) => ({
+    user: reduxStore.user,
+    newProfile: reduxStore.profileReducer
+});
+
+export default connect(mapStateToProps)(withRouter(Profiles));
