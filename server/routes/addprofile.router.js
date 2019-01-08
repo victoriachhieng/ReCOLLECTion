@@ -20,29 +20,53 @@ router.get('/', (req, res) => {
     }
 });
 
-// WILL NEED TO UPDATE 
-//  // Add a profile for the logged in user
-// router.post('/', (req, res) => {
-//     console.log(req.user);
-//     // if (req.isAuthenticated()) {
-//         const queryString =
-//         `INSERT INTO "profiles" (image_url, name, date_of_encounter, location, relation, misc, person_id, status_id) 
-//         VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
-//         // const values = [req.body.description, req.body.image, req.user.id];
-//         // pool.query(queryString, values).then(result => {
-//         pool.query(queryString).then(result => {
-//             res.sendStatus(204);
-//         }).catch(error => {
-//             console.log('in addprofile router post', error);
-//             res.sendStatus(500)
-//         })
-//     // } else {
-//     //     res.sendStatus(403)
-//     // }
-// });
+// Add a profile for the logged in user
+router.post('/', (req, res) => {
+    console.log(req.user);
+     if (req.isAuthenticated()) {
+         const newProfile = req.body;
+         const queryText =
+         `INSERT INTO "profiles" (image_url, name, date_of_encounter, location, relation, misc, person_id) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+    const queryValues = [
+        newProfile.image,
+        newProfile.name,
+        newProfile.date,
+        newProfile.location,
+        newProfile.relation,
+        newProfile.misc,
+        req.user.id
+    ];
+         pool.query(queryText, queryValues).then(result => {
+             res.sendStatus(204);
+         }).catch(error => {
+             console.log('in addprofile router post', error);
+             res.sendStatus(500)
+         })
+      } else {
+          res.sendStatus(403)
+      }
+ });
+
+ // Delete a profile if it's something the logged in user deleted
+router.delete('/:id', (req, res) => {
+    if (req.isAuthenticated()) {
+    const reqId = req.params.id;
+    console.log('route id: ', reqId);
+    const queryText = `DELETE FROM "profiles" WHERE id=$1`;
+    pool.query(queryText, [reqId])
+        .then(result => {
+            res.sendStatus(204);
+        }).catch(error => {
+            console.log('in addprofile router delete', error);
+            res.sendStatus(500);
+            })
+    } else {
+     res.sendStatus(403);
+     } 
+ });
 
 
-// Delete a profile if it's something the logged in user deleted
 // router.delete('/:id', rejectUnauthenticated, (req, res) => {
 //     if(req.isAuthenticated()){
 //     let id = req.params.id;

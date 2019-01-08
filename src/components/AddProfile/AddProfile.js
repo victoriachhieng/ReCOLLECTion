@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PersonAdd from "@material-ui/icons/PersonAdd";
 import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
 
 class AddProfile extends Component {
 
@@ -28,7 +29,7 @@ class AddProfile extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         console.log('in handleSubmit', this.state.newProfile);
-        // this.props.dispatch({ type: "ADD_PROFILE", payload: this.state.newProfile });
+        this.props.dispatch({ type: "ADD_PROFILE", payload: this.state.newProfile });
         this.setState({
             newProfile: ''
         })
@@ -87,4 +88,10 @@ const divContainer = {
 
 };
 
-export default withRouter(AddProfile);
+const mapStateToProps = (reduxStore) => {
+    return {
+        reduxStore
+    }
+}
+
+export default connect(mapStateToProps)(withRouter(AddProfile));
