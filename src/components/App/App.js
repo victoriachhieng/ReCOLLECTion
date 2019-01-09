@@ -5,11 +5,11 @@ import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import Profiles from '../Profiles/Profiles';
 import AddProfile from '../AddProfile/AddProfile';
 import Favorites from '../Favorites/Favorites';
+import EditProfiles from '../EditProfiles/EditProfiles';
 import './App.css';
 
 class App extends Component {
@@ -39,7 +39,7 @@ class App extends Component {
             <ProtectedRoute
               exact
               path="/home"
-              component={UserPage}
+              component={Profiles}
             />
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
@@ -50,28 +50,13 @@ class App extends Component {
             />
             <ProtectedRoute
               exact
-              path="/home"
-              component={UserPage}
-            />
-            <ProtectedRoute
-              exact
-              path="/profiles"
-              component={Profiles}
-              />
-            <ProtectedRoute
-              exact
               path="/add profiles"
               component={AddProfile}
             />
             <ProtectedRoute
               exact
-              path="/add profiles"
-              component={AddProfile}
-            />
-            <ProtectedRoute
-              exact
-              path="/add profiles"
-              component={AddProfile}
+              path="/edit profiles"
+              component={EditProfiles}
             />
             <ProtectedRoute
               exact
