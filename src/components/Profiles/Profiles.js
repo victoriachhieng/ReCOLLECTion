@@ -17,7 +17,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-
+//import ScrollingTechniques from "material-ui-scrolling-techniques/AppBar/ScrollingTechniques";
+//import AppBar, { FlexibleSpace, TabBar, ToolBar } from 'material-ui-scrolling-techniques/AppBar';
 
 class Profiles extends Component {
   componentDidMount = () => {
@@ -56,7 +57,7 @@ class Profiles extends Component {
           <CardActionArea>
             <CardMedia component="img" alt="Profile created" height="240" image={profile.image_url} title="Profile created" />
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
+                  <Typography gutterBottom variant="h5" component="h2">
                 <h4>{profile.name}</h4>
                 <p className="title">CEO & Founder, Example</p>
               </Typography>
@@ -128,7 +129,7 @@ const styleCard = {
     display: 'inline-block',
     width: '20vw',
     transitionDuration: '0.3s',
-    height: '45vw',
+    height: '100vw',
     fontFamily: 'Arial, Helvetica, sans - serif',
     margin: '25px',
     textAlign: 'center'
