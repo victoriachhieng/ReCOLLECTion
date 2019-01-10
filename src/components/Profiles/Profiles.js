@@ -17,12 +17,16 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import moment from 'moment';
 
 class Profiles extends Component {
 
     state = {
         positiveStatus: {
             type: 1 // will set status to positive
+        },
+        negativeStatus: {
+            type: 3 // will set status to negative
         }
     }
 
@@ -51,14 +55,14 @@ class Profiles extends Component {
   };
 
   handleFavorite = (profile) => {
-      this.props.dispatch({ type: "EDIT_STATUS", payload: {status: this.state, id: profile.id }})
-      this.setState({
-          positiveStatus: ''
-      })
+      this.props.dispatch({ type: "POSITIVE_STATUS", payload: { status: this.state.positiveStatus, id: profile.id }})
   };
 
-  handleDislike = () => {
+  handleDislike = (profile) => {
     console.log("in handleDislike");
+    console.log('state', this.state.negativeStatus);
+      this.props.dispatch({ type: "NEGATIVE_STATUS", payload: { status: this.state.negativeStatus, id: profile.id }
+      });
   };
 
   handleAddProfileBtn = () => {
@@ -78,7 +82,7 @@ class Profiles extends Component {
                 <p className="title">CEO & Founder, Example</p>
               </Typography>
               <Typography component="p">
-                <b>Date of Encounter</b> - {profile.date_of_encounter}
+                      <b>Date of Encounter</b> - {moment(profile.date_of_encounter).format('MMM Do YY')}
                 <br />
                 <br />
               </Typography>
@@ -101,7 +105,7 @@ class Profiles extends Component {
             </Tooltip>
             <Tooltip title="Dislike">
               <IconButton aria-label="Dislike">
-                <ThumbDownAltSharp onClick={this.handleDislike} style={btnStyle} />
+                <ThumbDownAltSharp onClick={() => this.handleDislike(profile)} style={btnStyle} />
               </IconButton>
             </Tooltip>
             <Tooltip title="Edit">
@@ -145,19 +149,11 @@ const styleCard = {
     display: 'inline-block',
     width: '20vw',
     transitionDuration: '0.3s',
-    height: '100vw',
+    height: '45vw',
     fontFamily: 'Arial, Helvetica, sans - serif',
     margin: '25px',
     textAlign: 'center'
 }
-
-
-const DATE_OPTIONS = {
-  weekday: "short",
-  year: "numeric",
-  month: "short",
-  day: "numeric"
-};
 
 const mapStateToProps = (reduxStore) => ({
     user: reduxStore.user,

@@ -25,31 +25,34 @@ function* postStatus(action) {
 }
 
 // generator with axios PUT
-function* editStatus(action) {
+function* positiveStatus(action) {
     try {
-        // update status with axios
-        yield call(axios.put, `/api/status/${action.payload.id}`, action.payload.status.positiveStatus);
+        // update status to positive with axios
+        yield call(axios.put, `/api/status/${action.payload.id}`, action.payload.status);
         yield dispatch({ type: 'FETCH_STATUS' });
     } catch (error) {
         console.log('error in edit saga', error);
     }
 }
 
-// generator with axios DELETE
-function* deleteStatus(action) {
+// generator with axios PUT
+function* negativeStatus(action) {
     try {
-        console.log('deleting action', action.payload);
-        yield call(axios.delete, `/api/status/${action.payload}`);
+        // update status to negative with axios
+        console.log('in negativeStatus', action.payload);
+        yield call(axios.put, `/api/status/${action.payload.id}`, action.payload.status);
         yield dispatch({ type: 'FETCH_STATUS' });
     } catch (error) {
-        console.log('error in delete saga', error);
+        console.log('error in edit saga', error);
     }
 }
 
 
+
 function* statusSaga() {
     yield takeEvery('FETCH_STATUS', fetchProfilesStatus);
-    yield takeEvery('EDIT_STATUS', editStatus);
+    yield takeEvery('POSITIVE_STATUS', positiveStatus);
+    yield takeEvery('NEGATIVE_STATUS', negativeStatus);
 }
 
 export default statusSaga;
