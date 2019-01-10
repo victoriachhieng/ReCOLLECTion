@@ -12,7 +12,6 @@ function* fetchProfilesStatus() {
 }
 
 // generator with axios POST 
-
 function* postStatus(action) {
     try {
         console.log('posting action', action.payload);
@@ -36,10 +35,24 @@ function* editStatus(action) {
     }
 }
 
+// generator with axios PUT
+function* negativeStatus(action) {
+    try {
+        // update status with axios
+        console.log('in negativeStatus', action.payload);
+        yield call(axios.put, `/api/status/${action.payload.id}`, action.payload.status);
+        yield dispatch({ type: 'FETCH_STATUS' });
+    } catch (error) {
+        console.log('error in edit saga', error);
+    }
+}
+
+
 
 function* statusSaga() {
     yield takeEvery('FETCH_STATUS', fetchProfilesStatus);
     yield takeEvery('EDIT_STATUS', editStatus);
+    yield takeEvery('NEGATIVE_STATUS', negativeStatus);
 }
 
 export default statusSaga;
