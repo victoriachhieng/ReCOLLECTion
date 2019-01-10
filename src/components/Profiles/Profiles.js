@@ -55,7 +55,7 @@ class Profiles extends Component {
   };
 
   handleFavorite = (profile) => {
-      this.props.dispatch({ type: "EDIT_STATUS", payload: {status: this.state.positiveStatus, id: profile.id }})
+      this.props.dispatch({ type: "POSITIVE_STATUS", payload: { status: this.state.positiveStatus, id: profile.id }})
   };
 
   handleDislike = (profile) => {
