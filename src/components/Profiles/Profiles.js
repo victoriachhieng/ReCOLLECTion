@@ -18,15 +18,29 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
-
 class Profiles extends Component {
+
+    state = {
+        positiveStatus: {
+            type: 1 // will set status to positive
+        }
+    }
+
+// get profiles and status on page load
   componentDidMount = () => {
     this.fetchProfiles();
+    this.fetchStatus();
   };
 
+ // get current profiles from db
   fetchProfiles = () => {
     this.props.dispatch({ type: "FETCH_PROFILE" });
   };
+
+// get current status from db
+    fetchStatus = () => {
+        this.props.dispatch({ type: 'FETCH_STATUS' });
+    }
 
     handleDelete = (profile) => {
         this.props.dispatch({ type: "DELETE_PROFILE", payload: profile.id });
@@ -36,8 +50,11 @@ class Profiles extends Component {
       this.props.history.push("/edit profiles");
   };
 
-  handleFavorite = () => {
-    console.log("in handleLike");
+  handleFavorite = (profile) => {
+      this.props.dispatch({ type: "EDIT_STATUS", payload: {status: this.state, id: profile.id }})
+      this.setState({
+          positiveStatus: ''
+      })
   };
 
   handleDislike = () => {
@@ -56,7 +73,7 @@ class Profiles extends Component {
           <CardActionArea>
             <CardMedia component="img" alt="Profile created" height="240" image={profile.image_url} title="Profile created" />
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
+                  <Typography gutterBottom variant="h5" component="h2">
                 <h4>{profile.name}</h4>
                 <p className="title">CEO & Founder, Example</p>
               </Typography>
@@ -79,7 +96,7 @@ class Profiles extends Component {
           <CardActions>
             <Tooltip title="Favorite">
               <IconButton aria-label="Favorite">
-                <FavoriteBorder onClick={this.handleFavorite} style={btnStyle} />
+                <FavoriteBorder onClick={() => this.handleFavorite(profile)} style={btnStyle} />
               </IconButton>
             </Tooltip>
             <Tooltip title="Dislike">
@@ -128,7 +145,7 @@ const styleCard = {
     display: 'inline-block',
     width: '20vw',
     transitionDuration: '0.3s',
-    height: '45vw',
+    height: '100vw',
     fontFamily: 'Arial, Helvetica, sans - serif',
     margin: '25px',
     textAlign: 'center'
