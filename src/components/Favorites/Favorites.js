@@ -15,13 +15,26 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 class Favorites extends Component {
 
+ // get profile on page load
   componentDidMount = () => {
     this.fetchProfiles();
   };
 
+ // get profile from db
   fetchProfiles = () => {
     this.props.dispatch({ type: "FETCH_PROFILE" });
   };
+
+  // get status on page load
+  componentDidMount() {
+    this.getStatus();
+  }
+
+  // get current status from db
+  getStatus = () => {
+    this.props.dispatch({ type: 'FETCH_STATUS' });
+  }
+
     render(){
       let profileDisplay = this.props.newProfile.map(profile => {
         return <Card key={profile.id} style={styleCard}>

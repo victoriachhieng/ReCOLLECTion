@@ -38,7 +38,7 @@ function* deleteProfiles(action) {
 // generator with axios PUT
 function* editProfiles(action) {
     try {
-        yield call(axios.put, '/api/profile', action.payload);
+        yield call(axios.put, `/api/profile/${action.payload}`);
         yield dispatch({ type: 'FETCH_PROFILE' });
     } catch (error) {
         console.log('error in edit saga', error);
