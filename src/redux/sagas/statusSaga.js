@@ -12,6 +12,7 @@ function* fetchProfilesStatus() {
 }
 
 // generator with axios POST 
+
 function* postStatus(action) {
     try {
         console.log('posting action', action.payload);
@@ -32,17 +33,6 @@ function* editStatus(action) {
         yield dispatch({ type: 'FETCH_STATUS' });
     } catch (error) {
         console.log('error in edit saga', error);
-    }
-}
-
-// generator with axios DELETE
-function* deleteStatus(action) {
-    try {
-        console.log('deleting action', action.payload);
-        yield call(axios.delete, `/api/status/${action.payload}`);
-        yield dispatch({ type: 'FETCH_STATUS' });
-    } catch (error) {
-        console.log('error in delete saga', error);
     }
 }
 
