@@ -23,7 +23,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
   }
 });
 
-// Update status of the logged in user
+// Update user profile status of the logged in user
 router.put("/:id", rejectUnauthenticated, (req, res) => {
   if (req.isAuthenticated()) {
     const reqId = req.params.id;
