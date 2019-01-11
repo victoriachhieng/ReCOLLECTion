@@ -8,7 +8,11 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 router.get('/', rejectUnauthenticated, (req, res) => {
     if (req.isAuthenticated()) {
         console.log('authenticated', req.isAuthenticated());
-        const queryText = 'SELECT * FROM "profiles" ORDER BY "name" ASC;';
+        const queryText = `SELECT "profiles"."id", "profiles"."image_url", "profiles"."name", "profiles"."date_of_encounter", "profiles"."location", "profiles"."relation", "profiles"."misc", "profiles"."status_id", "status"."type" 
+        FROM "profiles"
+        LEFT OUTER JOIN "status" 
+        ON "status"."id" = "profiles"."status_id"
+        ORDER BY "profiles"."name" ASC;`;
         pool.query(queryText)
             .then(result => {
                 res.send(result.rows);

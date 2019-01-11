@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux"; 
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
+import { withRouter } from "react-router-dom";
 import Favorite from "@material-ui/icons/Favorite";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -11,20 +11,33 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-
+import moment from "moment";
 
 class Favorites extends Component {
 
-  componentDidMount = () => {
-    this.fetchProfiles();
+  state = {
+    neutralStatus: {
+      type: 2 // will set status to neutral
+    }
+  }
+
+  componentDidMount() {
+    this.props.dispatch({ type: "FETCH_FAVORITES" });
+    this.props.dispatch({ type: "FETCH_STATUS" });
+  }
+
+  handleFavorites = (profile) => {
+    console.log("in handleFavorites");
+    console.log('state', this.state.neutralStatus);
+    this.props.dispatch({ type: "NEUTRAL_STATUS", payload: { status: this.state.neutralStatus, id: profile.id }
+    });
   };
 
-  fetchProfiles = () => {
-    this.props.dispatch({ type: "FETCH_PROFILE" });
-  };
-    render(){
-      let profileDisplay = this.props.newProfile.map(profile => {
-        return <Card key={profile.id} style={styleCard}>
+
+  render() {
+    let profileFavoritesDisplay = this.props.updateStatus.map(profile => {
+      if (profile.status_id === 1 ) 
+      return <Card key={profile.id} style={styleCard}>
             <CardActionArea>
               <CardMedia component="img" alt="Profile created" height="240" image={profile.image_url} title="Profile created" />
               <CardContent>
@@ -33,7 +46,9 @@ class Favorites extends Component {
                   <p className="title">CEO & Founder, Example</p>
                 </Typography>
                 <Typography component="p">
-                  <b>Date of Encounter</b> - {profile.date_of_encounter}
+                  <b>
+                    Date of Encounter
+                  </b> - {moment(profile.date_of_encounter).format("LL")}
                   <br />
                   <br />
                 </Typography>
@@ -52,26 +67,26 @@ class Favorites extends Component {
               <Grid container justify="center" alignItems="center">
                 <Tooltip title="Deselect Favorite">
                   <IconButton aria-label="Deselect Favorite">
-                    <FavoriteBorder onClick={this.handleFavorite} style={btnStyle} />
+                    <Favorite onClick={() => this.handleFavorites(profile)} style={btnStyle} />
                   </IconButton>
                 </Tooltip>
               </Grid>
             </CardActions>
           </Card>;
-      })
-      return <div className="typewriter">
-            <center>
-              <h1>Favorites</h1>
-              <br/>
-              <Favorite style={btnStyle}/>
-            </center>
-          <Grid container item xs={12}>
-            <ul>
-              {profileDisplay}
-            </ul>
-          </Grid>
-          </div>;
-    }
+    });
+    return (
+      <div className="typewriter">
+        <center>
+          <h1>Favorites</h1>
+          <br />
+          <Favorite style={btnStyle} />
+        </center>
+        <Grid container item xs={12}>
+          <ul>{profileFavoritesDisplay}</ul>
+        </Grid>
+      </div>
+    );
+  }
 }
 
 const btnStyle = {
@@ -89,8 +104,10 @@ const styleCard = {
   textAlign: 'center'
 }
 
+
 const mapStateToProps = (reduxStore) => ({
-  newProfile: reduxStore.profileReducer
+  favorites: reduxStore.favoritesReducer,
+  updateStatus: reduxStore.statusReducer
 });
 
-export default connect(mapStateToProps)(Favorites);
+export default connect(mapStateToProps)(withRouter(Favorites));
