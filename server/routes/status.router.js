@@ -26,6 +26,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 // Update user profile status of the logged in user
 router.put("/:id", rejectUnauthenticated, (req, res) => {
   if (req.isAuthenticated()) {
+      console.log('in put router', req.params.id, req.body);
     const reqId = req.params.id;
     const statusToUpdate = req.body.type; // This the data we sent
     const queryText = `UPDATE "profiles" SET "status_id" = $1

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
+import DeselectedFavBtn from '../DeselectedFavBtn/DeselectedFavBtn';
 import './Profiles.css';
 import BorderColor from "@material-ui/icons/BorderColor";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
