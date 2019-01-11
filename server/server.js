@@ -13,6 +13,7 @@ const userRouter = require('./routes/user.router');
 const ProfileRouter = require('./routes/profile.router');
 const statusRouter = require('./routes/status.router');
 const favoritesRouter = require('./routes/favorites.router');
+const dislikesRouter = require('./routes/dislikes.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -29,7 +30,8 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/profile', ProfileRouter);
 app.use('/api/status', statusRouter);
-app.use('/api/favorites', favoritesRouter)
+app.use('/api/favorites', favoritesRouter);
+app.use('/api/dislikes', dislikesRouter);
 
 // Serve static files
 app.use(express.static('build'));
