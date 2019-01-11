@@ -82,7 +82,7 @@ class Profiles extends Component {
                 <p className="title">CEO & Founder, Example</p>
               </Typography>
               <Typography component="p">
-                      <b>Date of Encounter</b> - {moment(profile.date_of_encounter).format('MMM Do YY')}
+                      <b>Date of Encounter</b> - {moment(profile.date_of_encounter).format('LL')}
                 <br />
                 <br />
               </Typography>

@@ -3,7 +3,7 @@ const pool = require("../modules/pool");
 const router = express.Router();
 const {rejectUnauthenticated} = require("../modules/authentication-middleware");
 
-// Get all of the profiles added by the user
+// Get all of the user profile favorites
 router.get("/", rejectUnauthenticated, (req, res) => {
   if (req.isAuthenticated()) {
     console.log("authenticated", req.isAuthenticated());
