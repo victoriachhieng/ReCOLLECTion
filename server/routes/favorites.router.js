@@ -4,12 +4,12 @@ const router = express.Router();
 const {rejectUnauthenticated} = require("../modules/authentication-middleware");
 
 // Get all of the user profile favorites
-router.get("/", rejectUnauthenticated, (req, res) => {
+router.get("/:id", rejectUnauthenticated, (req, res) => {
   if (req.isAuthenticated()) {
     console.log("authenticated", req.isAuthenticated());
       const queryText = `SELECT * FROM "profiles"
                          WHERE "status_id" = 1 ;`;
-    pool.query(queryText).then(result => {
+    pool.query(queryText, [req.user.id]).then(result => {
         res.send(result.rows);
       })
       .catch(error => {

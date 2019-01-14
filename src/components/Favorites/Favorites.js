@@ -21,10 +21,10 @@ class Favorites extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.dispatch({ type: "FETCH_FAVORITES" });
-    this.props.dispatch({ type: "FETCH_STATUS" });
-  }
+    componentDidMount = () => {
+      this.props.dispatch({ type: "FETCH_PROFILE", payload: this.props.user.id });
+      this.props.dispatch({ type: 'FETCH_STATUS', payload: this.props.user.id });
+    };
 
   handleFavorites = (profile) => {
     console.log("in handleFavorites");
@@ -74,18 +74,16 @@ class Favorites extends Component {
             </CardActions>
           </Card>;
     });
-    return (
-      <div className="typewriter">
+    return <div>
         <center>
-          <h1>Favorites</h1>
+          <h1 className="typewriter">Favorites</h1>
           <br />
           <Favorite style={btnStyle} />
         </center>
         <Grid container item xs={12}>
           <ul>{profileFavoritesDisplay}</ul>
         </Grid>
-      </div>
-    );
+      </div>;
   }
 }
 
@@ -105,9 +103,10 @@ const styleCard = {
 }
 
 
-const mapStateToProps = (reduxStore) => ({
-  favorites: reduxStore.favoritesReducer,
-  updateStatus: reduxStore.statusReducer
+const mapStateToProps = reduxStore => ({
+  // favorites: reduxStore.favoritesReducer,
+  updateStatus: reduxStore.statusReducer,
+  user: reduxStore.user
 });
 
 export default connect(mapStateToProps)(withRouter(Favorites));
