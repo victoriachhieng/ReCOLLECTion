@@ -2,9 +2,9 @@ import axios from 'axios';
 import { call, takeEvery, put as dispatch } from 'redux-saga/effects';
 
 // generator with axios GET call to get DB from profiles
-function* fetchProfilesStatus(action) {
+function* fetchProfilesStatus() {
     try {
-        const statusResponse = yield call(axios.get, `api/status${action.payload}`);
+        const statusResponse = yield call(axios.get, 'api/status');
         yield dispatch({ type: 'SET_STATUS', payload: statusResponse.data });
     } catch (error) {
         console.log('error in fetchProfilesStatus saga', error);

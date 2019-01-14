@@ -63,7 +63,6 @@ class Profiles extends Component {
 
   handleAddProfileBtn = () => {
     this.props.history.push("/add profiles");
-    alert("Adding a New Profile!");
   };
 
   render() {
@@ -75,7 +74,7 @@ class Profiles extends Component {
             <CardContent>
                   <Typography gutterBottom variant="h5" component="h2">
                 <h4>{profile.name}</h4>
-                <p className="title">CEO & Founder, Example</p>
+                <p className="title">{profile.title}</p>
               </Typography>
               <Typography component="p">
                       <b>Date of Encounter</b> - {moment(profile.date_of_encounter).format('LL')}
