@@ -19,6 +19,7 @@ function* postProfiles(action) {
         yield call(axios.post, '/api/profile', action.payload);
         // Reupdate state
         yield dispatch({ type: 'FETCH_PROFILE' })
+        alert(`You have successfully submitted a new Profile, let's check it out!`);
     } catch (error) {
         console.log('in postProfile error', error);
     }

@@ -24,6 +24,7 @@ class EditProfiles extends Component {
      editProfile: {
         image: '',
         name: '',
+        title: '',
         date: '',
         location: '',
         relation: '',
@@ -74,8 +75,9 @@ render() {
               <br />
               <TextField style={inputStyle} color="primary" label="Image URL" placeholder="Image URL" margin="normal" variant="outlined" value={this.state.image} onChange={this.handleChangeFor("image")} type="text" />
               <TextField style={inputStyle} label="Name" placeholder="Name" margin="normal" variant="outlined" value={this.state.name} onChange={this.handleChangeFor("name")} type="text" />
-              <TextField style={inputStyle} variant="outlined" label="Date of Encounter" type="date" value={this.state.date} InputProps={{ startAdornment: <InputAdornment onChange={this.handleChangeFor("date")} position="start" /> }} />
+              <TextField style={inputStyle} label="Title" placeholder="Example: CEO" margin="normal" variant="outlined" value={this.state.title} onChange={this.handleChangeFor("title")} type="text" />
               <br />
+              <TextField style={inputStyle} id="outlined-bare" helperText="Select Date of Ecounter" margin="normal" variant="outlined" type="date" onChange={this.handleChangeFor("date")} />
               <TextField style={inputStyle} label="Location of Encounter" placeholder="Location of Encounter" margin="normal" variant="outlined" value={this.state.location} onChange={this.handleChangeFor("location")} type="text" />
               <TextField style={inputStyle} label="Relation" placeholder="Example: colleague" margin="normal" variant="outlined" value={this.state.relation} onChange={this.handleChangeFor("relation")} type="text" />
               <br />

@@ -8,12 +8,12 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 router.get('/:id', rejectUnauthenticated, (req, res) => {
     if (req.isAuthenticated()) {
         console.log('authenticated', req.isAuthenticated());
-        const queryText = `SELECT "profiles"."id", "profiles"."image_url", "profiles"."name", "profiles"."date_of_encounter", "profiles"."location", "profiles"."relation", "profiles"."misc", "profiles"."status_id", "status"."type" 
-        FROM "profiles"
-        LEFT OUTER JOIN "status" 
-        ON "status"."id" = "profiles"."status_id"
-        WHERE "person_id" = $1
-        ORDER BY "profiles"."name" ASC;`;
+        const queryText = `SELECT "profiles"."id", "profiles"."image_url", "profiles"."name", "profiles"."title", "profiles"."date_of_encounter", "profiles"."location", "profiles"."relation", "profiles"."misc", "profiles"."status_id", "status"."type" 
+                           FROM "profiles"
+                           JOIN "status" 
+                           ON "status"."id" = "profiles"."status_id"
+                           WHERE "person_id" = $1
+                           ORDER BY "profiles"."name" ASC;`;
         pool.query(queryText, [req.user.id])
             .then(result => {
                 res.send(result.rows);
@@ -30,12 +30,12 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     console.log(req.user);
      if (req.isAuthenticated()) {
          const newProfile = req.body;
-         const queryText =
-         `INSERT INTO "profiles" (image_url, name, date_of_encounter, location, relation, misc, person_id) 
-          VALUES ($1, $2, $3, $4, $5, $6, $7);`;
-    const queryValues = [
+         const queryText = `INSERT INTO "profiles" ("image_url", "name", "title", "date_of_encounter", "location", "relation", "misc", "person_id") 
+                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
+        const queryValues = [
         newProfile.image,
         newProfile.name,
+        newProfile.title,
         newProfile.date,
         newProfile.location,
         newProfile.relation,
