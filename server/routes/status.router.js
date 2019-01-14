@@ -3,15 +3,16 @@ const pool = require("../modules/pool");
 const router = express.Router();
 const { rejectUnauthenticated } = require("../modules/authentication-middleware");
 
-router.get("/", rejectUnauthenticated, (req, res) => {
+router.get("/:id", rejectUnauthenticated, (req, res) => {
   if (req.isAuthenticated()) {
     console.log("authenticated", req.isAuthenticated());
     const queryText = `SELECT "profiles"."id", "profiles"."image_url", "profiles"."name", "profiles"."date_of_encounter", "profiles"."location", "profiles"."relation", "profiles"."misc", "profiles"."status_id", "status"."type" 
         FROM "profiles"
         LEFT OUTER JOIN "status" 
         ON "status"."id" = "profiles"."status_id"
+        WHERE "person_id" = $1
         ORDER BY "profiles"."name" ASC;`;
-    pool.query(queryText).then(result => {
+    pool.query(queryText,[req.user.id]).then(result => {
         res.send(result.rows);
       })
       .catch(error => {

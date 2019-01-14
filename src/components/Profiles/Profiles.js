@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-import DeselectedFavBtn from '../DeselectedFavBtn/DeselectedFavBtn';
 import './Profiles.css';
 import BorderColor from "@material-ui/icons/BorderColor";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
@@ -19,6 +18,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import moment from 'moment';
+import Portrait from "@material-ui/icons/Portrait";
 
 class Profiles extends Component {
 
@@ -33,19 +33,14 @@ class Profiles extends Component {
 
 // get profiles and status on page load
   componentDidMount = () => {
-    this.fetchProfiles();
-    this.fetchStatus();
+    this.props.dispatch({ type: "FETCH_PROFILE", payload: this.props.user.id });
+    this.props.dispatch({ type: 'FETCH_STATUS' });
   };
 
- // get current profiles from db
-  fetchProfiles = () => {
-    this.props.dispatch({ type: "FETCH_PROFILE" });
-  };
-
-// get current status from db
-    fetchStatus = () => {
-        this.props.dispatch({ type: 'FETCH_STATUS' });
-    }
+//  // get current profiles from db
+//   fetchProfiles = () => {
+//     this.props.dispatch({ type: "FETCH_PROFILE", payload: this.props.user.id });
+//   };
 
     handleDelete = (profile) => {
         this.props.dispatch({ type: "DELETE_PROFILE", payload: profile.id });
@@ -76,7 +71,7 @@ class Profiles extends Component {
     let profileDisplay = this.props.newProfile.map(profile => {
       return <Card key={profile.id} style={styleCard}>
           <CardActionArea>
-            <CardMedia component="img" alt="Profile created" height="240" image={profile.image_url} title="Profile created" />
+              <CardMedia component="img" alt="Profile created" image={profile.image_url} height="250" title="Profile created" />
             <CardContent>
                   <Typography gutterBottom variant="h5" component="h2">
                 <h4>{profile.name}</h4>
@@ -123,20 +118,22 @@ class Profiles extends Component {
         </Card>;
         
     });
-    return <div className="typewriter">
+    return <div>
         <center>
-          <h1>Welcome, {this.props.user.username} !</h1>
+            <h1 className="typewriter">Welcome, {this.props.user.username} !</h1>
           <br />
-          <h2>Profiles</h2>
-          <Button variant="contained" color="default" onClick={this.handleAddProfileBtn}>
+          <h1>Profiles</h1>
+            <Portrait style={profileIcon}/>
+            <br/>
+            <Button variant="outlined" size="medium" style={addBtn} onClick={this.handleAddProfileBtn}>
             Add New Profile
             <GroupAdd />
           </Button>
         </center>
-        <Grid container item xs={12}>
-        <ul>
-          {profileDisplay}
-            </ul>
+        <Grid container item xs={12} >
+            <Grid item xs={12}>
+            <ul>{profileDisplay}</ul>
+          </Grid>
         </Grid>
       </div>;
   }
@@ -145,16 +142,30 @@ const btnStyle = {
   color: "black",
 };
 
-const styleCard = {
-    overflow: 'hidden',
-    display: 'inline-block',
-    width: '20vw',
-    transitionDuration: '0.3s',
-    height: '45vw',
-    fontFamily: 'Arial, Helvetica, sans - serif',
-    margin: '25px',
-    textAlign: 'center'
+
+const profileIcon = {
+    width: '65',
+    height: '65'
 }
+
+const addBtn = {
+  backgroundColor: "#2F3F73",
+    color: '#a9a9a9'
+};
+
+
+
+ const styleCard = {
+    overflow: "hidden",
+    display: "inline-block",
+    width: "20vw",
+    transitionDuration: "0.3s",
+    height: "45vw",
+    fontFamily: "Arial, Helvetica, sans - serif",
+    margin: "20px",
+    textAlign: "center",
+    border: "1px solid #2F3F73",
+ };
 
 const mapStateToProps = (reduxStore) => ({
     user: reduxStore.user,
