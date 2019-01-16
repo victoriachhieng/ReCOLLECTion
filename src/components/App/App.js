@@ -50,12 +50,12 @@ class App extends Component {
             />
             <ProtectedRoute
               exact
-              path="/add profiles"
+              path="/addprofiles"
               component={AddProfile}
             />
             <ProtectedRoute
               exact
-              path="/edit profiles"
+              path="/editprofiles"
               component={EditProfiles}
             />
             <ProtectedRoute

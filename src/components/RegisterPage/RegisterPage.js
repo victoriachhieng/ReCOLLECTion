@@ -70,7 +70,7 @@ class RegisterPage extends Component {
                     Register User
                   </Typography>
                 </center>
-                <form onSubmit={this.registerUser}>
+                <form className="login" onSubmit={this.registerUser}>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="username">Username</InputLabel>
                     <Input id="username" name="username" autoComplete="username" value={this.state.username} onChange={this.handleInputChangeFor("username")} />

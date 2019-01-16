@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import './Profiles.css';
 import BorderColor from "@material-ui/icons/BorderColor";
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
-import ThumbDownAltSharp from "@material-ui/icons/ThumbDownAltSharp";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -19,6 +17,8 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import moment from 'moment';
 import Portrait from "@material-ui/icons/Portrait";
+import DislikeBtn from '../DislikeBtn/DislikeBtn';
+import FavoriteBtn from '../FavoriteBtn/FavoriteBtn';
 
 class Profiles extends Component {
 
@@ -37,41 +37,27 @@ class Profiles extends Component {
     this.props.dispatch({ type: 'FETCH_STATUS' });
   };
 
-//  // get current profiles from db
-//   fetchProfiles = () => {
-//     this.props.dispatch({ type: "FETCH_PROFILE", payload: this.props.user.id });
-//   };
-
-    handleDelete = (profile) => {
+  handleDelete = (profile) => {
         this.props.dispatch({ type: "DELETE_PROFILE", payload: profile.id });
     };
 
-  handleEdit = () => {
-      this.props.history.push("/edit profiles");
-  };
-
-  handleFavorite = (profile) => {
-      this.props.dispatch({ type: "POSITIVE_STATUS", payload: { status: this.state.positiveStatus, id: profile.id }})
-  };
-
-  handleDislike = (profile) => {
-    console.log("in handleDislike");
-    console.log('state', this.state.negativeStatus);
-      this.props.dispatch({ type: "NEGATIVE_STATUS", payload: { status: this.state.negativeStatus, id: profile.id }
-      });
-  };
+   handleEdit = (profile) => {
+       this.props.history.push("/editprofiles");
+       this.props.dispatch({type: "SET_EDIT_PROFILE_ID", payload: profile.id })
+   };
 
   handleAddProfileBtn = () => {
-    this.props.history.push("/add profiles");
-  };
+    this.props.history.push("/addprofiles");
+  }
 
   render() {
     // map of profiles
     let profileDisplay = this.props.newProfile.map(profile => {
-      return <Card key={profile.id} style={styleCard}>
+        return <Grid key={profile.id} style={styleGrid} item xs={3}>
+            <Card style={styleCard}>
           <CardActionArea>
               <CardMedia component="img" alt="Profile created" image={profile.image_url} height="250" title="Profile created" />
-            <CardContent>
+            <CardContent style={styleContent}>
                   <Typography gutterBottom variant="h5" component="h2">
                 <h4>{profile.name}</h4>
                 <p className="title">{profile.title}</p>
@@ -92,20 +78,12 @@ class Profiles extends Component {
               </Typography>
             </CardContent>
           </CardActionArea>
-          <CardActions>
-            <Tooltip title="Favorite">
-              <IconButton aria-label="Favorite">
-                <FavoriteBorder onClick={() => this.handleFavorite(profile)} style={btnStyle} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Dislike">
-              <IconButton aria-label="Dislike">
-                <ThumbDownAltSharp onClick={() => this.handleDislike(profile)} style={btnStyle} />
-              </IconButton>
-            </Tooltip>
+          <CardActions style={styleBtnCard}>
+            <FavoriteBtn profileItem={profile} status ={this.state}/>
+                    <DislikeBtn profileItem={profile} status={this.state}/>
             <Tooltip title="Edit">
               <IconButton aria-label="Edit">
-                <BorderColor onClick={this.handleEdit} style={btnStyle} />
+                <BorderColor onClick={() => this.handleEdit(profile)} style={btnStyle} />
               </IconButton>
             </Tooltip>
             <Tooltip title="Delete">
@@ -114,8 +92,8 @@ class Profiles extends Component {
               </IconButton>
             </Tooltip>
           </CardActions>
-        </Card>;
-        
+        </Card>
+        </Grid>;
     });
     return <div>
         <center>
@@ -130,9 +108,7 @@ class Profiles extends Component {
           </Button>
         </center>
         <Grid container item xs={12} >
-            <Grid item xs={12}>
-            <ul>{profileDisplay}</ul>
-          </Grid>
+           {profileDisplay}
         </Grid>
       </div>;
   }
@@ -152,19 +128,27 @@ const addBtn = {
     color: '#a9a9a9'
 };
 
+const styleGrid = {
+    minWidth: '300px',
+    margin: 'auto'
+}
 
+const styleBtnCard = {
+    height: '10vh'
+}
 
- const styleCard = {
-    overflow: "hidden",
-    display: "inline-block",
-    width: "20vw",
-    transitionDuration: "0.3s",
-    height: "45vw",
-    fontFamily: "Arial, Helvetica, sans - serif",
-    margin: "20px",
-    textAlign: "center",
-    border: "1px solid #2F3F73",
- };
+const styleContent = {
+    height: '40vh',
+    overflowY: 'scroll'
+}
+
+  const styleCard = {
+     minWidth: "300px",
+     fontFamily: "Arial, Helvetica, sans - serif",
+     margin: "20px",
+     textAlign: "center",
+     border: "1px solid #2F3F73",
+};
 
 const mapStateToProps = (reduxStore) => ({
     user: reduxStore.user,

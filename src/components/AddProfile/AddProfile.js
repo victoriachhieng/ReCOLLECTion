@@ -12,10 +12,9 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
-    palette: {
-        primary: { main: '#7A86AD' },
-        secondary: { main: '#11cb5f' },
-    },
+  palette: {
+    primary: { main: "#ffffff" },
+  }
 });
 
 class AddProfile extends Component {
@@ -60,7 +59,7 @@ class AddProfile extends Component {
   };
 
   render() {
-    return <React.Fragment>
+    return <div>
         <br />
         <br />
         <MuiThemeProvider theme={theme}>
@@ -72,19 +71,22 @@ class AddProfile extends Component {
               </h1>
               <br />
               <center>
-                <PersonAdd style={editIcon} />
+                <PersonAdd style={addIcon} />
               </center>
-              <br />
+              <form>
               <TextField style={inputStyle} color="primary" label="Image URL" placeholder="Image URL" margin="normal" variant="outlined" value={this.state.image} onChange={this.handleChangeFor("image")} type="text" />
               <TextField style={inputStyle} label="Name" placeholder="Name" margin="normal" variant="outlined" value={this.state.name} onChange={this.handleChangeFor("name")} type="text" />
               <TextField style={inputStyle} label="Title" placeholder="Example: CEO" margin="normal" variant="outlined" value={this.state.title} onChange={this.handleChangeFor("title")} type="text" />
               <br />
-              <TextField style={inputStyle} id="outlined-bare" helperText="Select Date of Ecounter" margin="normal" variant="outlined" type="date" onChange={this.handleChangeFor("date")} />
+              <TextField style={inputStyle} id="outlined-bare" margin="normal" variant="outlined" type="date" onChange={this.handleChangeFor("date")} />
               <TextField style={inputStyle} label="Location of Encounter" placeholder="Location of Encounter" margin="normal" variant="outlined" value={this.state.location} onChange={this.handleChangeFor("location")} type="text" />
               <TextField style={inputStyle} label="Relation" placeholder="Example: colleague" margin="normal" variant="outlined" value={this.state.relation} onChange={this.handleChangeFor("relation")} type="text" />
               <br />
+              <p style={textStyle}>Select Date of Encounter</p>
               <TextField style={inputStyle} label="Misc Comments" placeholder="Misc Comments" margin="normal" variant="outlined" value={this.state.misc} onChange={this.handleChangeFor("misc")} type="text" multiline rows="4" />
               <br />
+              <br/>
+              </form>
               <Button onClick={this.handleBackBtn} variant="contained" size="medium">
                 <ArrowBack />
                 Back
@@ -96,41 +98,49 @@ class AddProfile extends Component {
             </Card>
           </Grid>
         </MuiThemeProvider>
-      </React.Fragment>;
+      </div>;
   }
 }
 
+const textStyle = {
+  fontSize: "12px",
+  marginLeft: "73px",
+  textAlign: "left",
+  color: "#ffffff"
+};
+
 const btnStyle = {
-    margin: '0 auto',
-    margin: "10px",
-    gridTemplateColumns: 'auto auto auto',
-    gridGap: '10px',
+  margin: "10px",
+  gridTemplateColumns: 'auto auto auto',
+  gridGap: '10px',
 }
 
-const editIcon = {
-    width: "65",
-    height: "65",
-    color: 'white'
+const addIcon = {
+  width: "65",
+  height: "65",
+  color: 'white'
 };
 
 const inputStyle = {
-    margin: "10px",
-    gridTemplateColumns: 'auto auto auto',
-    gridGap: '10px'
+  margin: "10px",
+  gridTemplateColumns: 'auto auto auto',
+  gridGap: '10px',
+  backgroundColor: '#7A86AD',
+  borderRadius: '6px'
 }
 
 const divContainer = {
-    margin: "0 auto",
-    textAlign: "center",
-    border: "2px black",
-    width: "950px",
-    height: "565px",
-    backgroundColor: "#2F3F73",
-    borderRadius: '10px',
+  margin: "0 auto",
+  textAlign: "center",
+  border: "2px black",
+  width: "750px",
+  height: "565px",
+  backgroundColor: "#2F3F73",
+  borderRadius: '10px',
 };
 
 const h1 = {
-    color: 'white'
+  color: 'white'
 }
 
 const mapStateToProps = (reduxStore) => {
