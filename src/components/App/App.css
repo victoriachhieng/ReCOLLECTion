@@ -20,7 +20,7 @@ body {
 }
 
 
-form {
+login {
     background-color: #fafdfc;
     width: 60%;
     height: 250px;
@@ -29,7 +29,7 @@ form {
     border-radius: 2px;
 }
 
-input {
+.login {
     margin: 5px;
     margin-bottom: 10px;
 }

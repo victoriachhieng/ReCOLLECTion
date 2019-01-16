@@ -4,61 +4,83 @@ import { withRouter } from "react-router-dom";
 import BorderColor from "@material-ui/icons/BorderColor";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import Grid from '@material-ui/core/Grid';
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { createMuiTheme } from "@material-ui/core/styles";
+import moment from "moment";
+import swal from "sweetalert";
+
 
 const theme = createMuiTheme({
     palette: {
-        primary: { main: '#7A86AD' },
+        primary: { main: '#ffffff' },
     },
 });
 
 class EditProfiles extends Component {
 
     state = {
-     editProfile: {
         image: '',
         name: '',
         title: '',
         date: '',
         location: '',
         relation: '',
-        misc: ''
+        misc: '',
+        id: ''
     }
-}
-  
-    handleChangeFor = propertyName => event => {
-    console.log('in handleChangeFor');
-    this.setState({
-        editProfile: {
-            ...this.state.editProfile,
-            [propertyName]: event.target.value
-        }
-    })
-}
 
-    handleSave = (id) => {
-    this.props.dispatch({ type: "EDIT_PROFILE", payload: this.state.editProfile, id});
+    componentWillMount = () => {
+        this.props.dispatch({ type: "FETCH_PROFILE" })
+        this.loadProfile();
+    }
+
+    loadProfile = () => {
+        const id = this.props.editProfile;
+        let profile = {};
+        this.props.profiles.forEach(element => {
+            if (element.id === id) {
+                profile = element;
+            }
+        });
+        console.log('in loadProfile', profile);
         this.setState({
-            editProfile: ''
-        })
+            image: profile.image_url,
+            name: profile.name,
+            title: profile.title,
+            date: moment(profile.date_of_encounter).format('LL'),
+            location: profile.location,
+            relation: profile.relation,
+            misc: profile.misc,
+            id: id
+        });
     }
 
-    // this.props.history.push('/home');
-    // alert(`Profile has been updated, let's check it out!`)
+    handleInputChange = propertyName => event => {
+    console.log('in handleInputChange', this.state, 'why');
+    this.setState({
+            [propertyName]: event.target.value
+    })
+    console.log(this.state);
+}
+
+    handleSave = () => {
+        console.log('handleSave', this.state.editProfile);
+        this.props.dispatch({ type: "EDIT_PROFILE", payload: this.state});
+        swal("Profile has been updated!", "Click the back button to view the changes!", "success");
+    }
+
 
 handleBackBtn = () => {
     this.props.history.push('/home')
-    alert('You will be directed back to the Home Page!')
+    swal("You have clicked the Back Button!", "Directing back to the Home Page!");
 }
 
 render() {
-    return <React.Fragment>
+        return <div>
         <br />
         <br />
         <MuiThemeProvider theme={theme}>
@@ -73,34 +95,40 @@ render() {
                 <BorderColor style={editIcon} />
               </center>
               <br />
-              <TextField style={inputStyle} color="primary" label="Image URL" placeholder="Image URL" margin="normal" variant="outlined" value={this.state.image} onChange={this.handleChangeFor("image")} type="text" />
-              <TextField style={inputStyle} label="Name" placeholder="Name" margin="normal" variant="outlined" value={this.state.name} onChange={this.handleChangeFor("name")} type="text" />
-              <TextField style={inputStyle} label="Title" placeholder="Example: CEO" margin="normal" variant="outlined" value={this.state.title} onChange={this.handleChangeFor("title")} type="text" />
+              <TextField style={inputStyle} color="primary" label="Image URL" placeholder="Image URL" margin="normal" variant="outlined" value={this.state.image} onChange={this.handleInputChange("image")} type="text" />
+                        <TextField style={inputStyle} label="Name" placeholder="Name" margin="normal" variant="outlined" value={this.state.name} onChange={this.handleInputChange("name")} type="text" />
+                        <TextField style={inputStyle} label="Title" placeholder="Example: CEO" margin="normal" variant="outlined" value={this.state.title} onChange={this.handleInputChange("title")} type="text" />
               <br />
-              <TextField style={inputStyle} id="outlined-bare" helperText="Select Date of Ecounter" margin="normal" variant="outlined" type="date" onChange={this.handleChangeFor("date")} />
-              <TextField style={inputStyle} label="Location of Encounter" placeholder="Location of Encounter" margin="normal" variant="outlined" value={this.state.location} onChange={this.handleChangeFor("location")} type="text" />
-              <TextField style={inputStyle} label="Relation" placeholder="Example: colleague" margin="normal" variant="outlined" value={this.state.relation} onChange={this.handleChangeFor("relation")} type="text" />
+                        <TextField style={inputStyle} id="outlined-bare" margin="normal" variant="outlined" type="text" value={this.state.date} onChange={this.handleInputChange("date")} />
+                        <TextField style={inputStyle} label="Location of Encounter" placeholder="Location of Encounter" margin="normal" variant="outlined" value={this.state.location} onChange={this.handleInputChange("location")} type="text" />
+                        <TextField style={inputStyle} label="Relation" placeholder="Example: colleague" margin="normal" variant="outlined" value={this.state.relation} onChange={this.handleInputChange("relation")} type="text" />
               <br />
-              <TextField style={inputStyle} label="Misc Comments" placeholder="Misc Comments" margin="normal" variant="outlined" value={this.state.misc} onChange={this.handleChangeFor("misc")} type="text" multiline rows="4" />
-              <br />
+              <p style={textStyle}>Select Date of Encounter</p>
+                        <TextField style={inputStyle} label="Misc Comments" placeholder="Misc Comments" margin="normal" variant="outlined" value={this.state.misc} onChange={this.handleInputChange("misc")} type="text" multiline rows="4" />
               <br />
               <Button onClick={this.handleBackBtn} variant="contained" size="medium">
                 <ArrowBack />
                 Back
               </Button>
-              <Button style={btnStyle} onClick={this.handleSave} variant="contained" size="medium">
+                <Button onClick={this.handleSave} style={btnStyle} variant="contained" size="medium">
                 <SaveIcon />
                 Save
               </Button>
             </Card>
           </Grid>
         </MuiThemeProvider>
-      </React.Fragment>;
-}
-}
+      </div>;
+      }
+    }
+
+const textStyle = {
+  fontSize: "12px",
+  marginLeft: "73px",
+  textAlign: "left",
+  color: "#ffffff"
+};
 
 const btnStyle = {
-    margin: '0 auto',
     margin: "10px",
     gridTemplateColumns: 'auto auto auto',
     gridGap: '10px',
@@ -115,15 +143,17 @@ const editIcon = {
 const inputStyle = {
   margin: "10px",
   gridTemplateColumns: 'auto auto auto',
-  gridGap: '10px'
+  gridGap: '10px',
+  backgroundColor: '#7A86AD',
+  borderRadius: '6px'
 }
 
 const divContainer = {
   margin: "0 auto",
   textAlign: "center",
   border: "2px black",
-  width: "950px",
-  height: "550px",
+  width: "750px",
+  height: "565px",
   backgroundColor: "#2F3F73",
   borderRadius: '10px',
 };
@@ -132,11 +162,9 @@ const h1 = {
     color: 'white'
 }
 
+const mapStateToProps = reduxStore => ({
+  editProfile: reduxStore.editReducer,
+  profiles: reduxStore.profileReducer,
+});
 
-const mapStateToProps = (reduxStore) => {
-    return {
-        reduxStore
-    }
-}
-
-export default connect(mapStateToProps)(EditProfiles);
+export default connect(mapStateToProps)(withRouter(EditProfiles));

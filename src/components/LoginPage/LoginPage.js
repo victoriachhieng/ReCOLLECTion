@@ -70,7 +70,7 @@ class LoginPage extends Component {
                     Sign In
                   </Typography>
                 </center>
-                <form onSubmit={this.login}>
+                <form className="login" onSubmit={this.login}>
                   <FormControl margin="normal" required fullWidth>
                     <InputLabel htmlFor="username">Username</InputLabel>
                     <Input id="username" name="username" autoComplete="username" value={this.state.username} onChange={this.handleInputChangeFor("username")} />
