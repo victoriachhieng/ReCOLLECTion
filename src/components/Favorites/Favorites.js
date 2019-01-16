@@ -12,6 +12,33 @@ import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import moment from "moment";
+import swal from "sweetalert";
+
+const btnStyle = {
+  color: "red"
+};
+
+const styleGrid = {
+  minWidth: "300px",
+  margin: "auto"
+};
+
+const styleBtnCard = {
+  height: "10vh"
+};
+
+const styleContent = {
+  height: "40vh",
+  overflowY: "scroll"
+};
+
+const styleCard = {
+  minWidth: "300px",
+  fontFamily: "Arial, Helvetica, sans - serif",
+  margin: "20px",
+  textAlign: "center",
+  border: "1px solid #2F3F73"
+};
 
 class Favorites extends Component {
 
@@ -27,10 +54,8 @@ class Favorites extends Component {
     };
 
   handleFavorites = (profile) => {
-    console.log("in handleFavorites");
-    console.log('state', this.state.neutralStatus);
-    this.props.dispatch({ type: "NEUTRAL_STATUS", payload: { status: this.state.neutralStatus, id: profile.id }
-    });
+    this.props.dispatch({ type: "NEUTRAL_STATUS", payload: { status: this.state.neutralStatus, id: profile.id }});
+    swal("Profile removed from Favorites!");
   };
 
 
@@ -87,40 +112,7 @@ class Favorites extends Component {
   }
 }
 
-const btnStyle = {
-  color: "red",
-};
-
-const styleGrid = {
-  minWidth: '300px',
-  margin: 'auto'
-}
-
-const styleBtnCard = {
-  height: '10vh'
-}
-
-const styleContent = {
-  height: '40vh',
-  overflowY: 'scroll'
-}
-
-const styleCard = {
-  minWidth: "300px",
-  fontFamily: "Arial, Helvetica, sans - serif",
-  margin: "20px",
-  textAlign: "center",
-  border: "1px solid #2F3F73",
-};
-
-
-
-
-
-
-
 const mapStateToProps = reduxStore => ({
-  // favorites: reduxStore.favoritesReducer,
   updateStatus: reduxStore.statusReducer,
   user: reduxStore.user
 });
