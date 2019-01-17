@@ -1,4 +1,4 @@
-// Used to store edit profiles returned from the server
+// Used to store profiles id returned from the server
 const editReducer = (state = -1, action) => {
     console.log('editReducer', action.payload);
     switch (action.type) {

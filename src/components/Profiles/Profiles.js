@@ -31,10 +31,13 @@ class Profiles extends Component {
         }
     }
 
+    componentWillMount = () => {
+        this.props.dispatch({ type: "FETCH_STATUS" });
+    }
+
 // get profiles and status on page load
   componentDidMount = () => {
     this.props.dispatch({ type: "FETCH_PROFILE", payload: this.props.user.id });
-    this.props.dispatch({ type: 'FETCH_STATUS' });
   };
 
   handleDelete = (profile) => {
@@ -99,7 +102,7 @@ class Profiles extends Component {
         <center>
             <h1 className="typewriter">Welcome, {this.props.user.username} !</h1>
           <br />
-          <h1>Profiles</h1>
+          <h2>Profiles</h2>
             <Portrait style={profileIcon}/>
             <br/>
             <Button variant="outlined" size="medium" style={addBtn} onClick={this.handleAddProfileBtn}>

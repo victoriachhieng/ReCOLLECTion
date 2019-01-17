@@ -99,7 +99,7 @@ const paper = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  width: '100vh'
+  width: '55vh'
 }
 
 // Instead of taking everything from state, we just want the error messages.

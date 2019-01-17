@@ -103,7 +103,7 @@ render() {
                         <TextField style={inputStyle} label="Location of Encounter" placeholder="Location of Encounter" margin="normal" variant="outlined" value={this.state.location} onChange={this.handleInputChange("location")} type="text" />
                         <TextField style={inputStyle} label="Relation" placeholder="Example: colleague" margin="normal" variant="outlined" value={this.state.relation} onChange={this.handleInputChange("relation")} type="text" />
               <br />
-              <p style={textStyle}>Select Date of Encounter</p>
+              <p style={textStyle}>Change Date of Encounter</p>
                         <TextField style={inputStyle} label="Misc Comments" placeholder="Misc Comments" margin="normal" variant="outlined" value={this.state.misc} onChange={this.handleInputChange("misc")} type="text" multiline rows="4" />
               <br />
               <Button onClick={this.handleBackBtn} variant="contained" size="medium">
