@@ -5,8 +5,13 @@ import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 
-
 class FavoriteBtn extends Component {
+
+    // get profiles and status on page load
+    componentDidMount = () => {
+        this.props.dispatch({ type: "FETCH_PROFILE", payload: this.props.user.id });
+        this.props.dispatch({ type: 'FETCH_STATUS', payload: this.props.user.id });
+    };
 
 
     state = {
@@ -23,19 +28,18 @@ class FavoriteBtn extends Component {
         })
     }
 
-
     render() {
         let button;
-        if (this.state.changeColor !== 1 ) {
+        if (this.state.changeColor == 1 ) {
             button = <Tooltip title="Favorite">
                 <IconButton aria-label="Favorite">
-                  <FavoriteBorder onClick={() => this.handleFavorite(1)} style={btnStyle} />
+                  <Favorite onClick={() => this.handleFavorite(2)} style={btnStyle} />
                 </IconButton>
               </Tooltip>;
         } else {
             button = <Tooltip title="Favorite">
                 <IconButton aria-label="Favorite">
-                  <Favorite onClick={() => this.handleFavorite(2)} style={btnStyle} />
+                <FavoriteBorder onClick={() => this.handleFavorite(1)} style={btnStyle} />
                 </IconButton>
               </Tooltip>;
         }
@@ -53,7 +57,8 @@ const btnStyle = {
 
 
 const mapStateToProps = (reduxStore) => ({
-    profile: reduxStore.profileReducer
+    profile: reduxStore.profileReducer,
+    user: reduxStore.user
 });
 
 export default connect(mapStateToProps)(FavoriteBtn);

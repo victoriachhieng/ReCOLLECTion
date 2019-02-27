@@ -15,9 +15,9 @@ import swal from "sweetalert";
 
 
 const theme = createMuiTheme({
-    palette: {
-        primary: { main: '#ffffff' },
-    },
+  palette: {
+    primary: { main: "#ffffff" }
+  }
 });
 
 class EditProfiles extends Component {
@@ -142,11 +142,11 @@ const editIcon = {
 
 const inputStyle = {
   margin: "10px",
-  gridTemplateColumns: 'auto auto auto',
-  gridGap: '10px',
-  backgroundColor: '#7A86AD',
-  borderRadius: '6px'
-}
+  gridTemplateColumns: "auto auto auto",
+  gridGap: "10px",
+  backgroundColor: "#7A86AD",
+  borderRadius: "6px"
+};
 
 const divContainer = {
   margin: "0 auto",

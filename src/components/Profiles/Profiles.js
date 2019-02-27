@@ -19,6 +19,45 @@ import moment from 'moment';
 import Portrait from "@material-ui/icons/Portrait";
 import DislikeBtn from '../DislikeBtn/DislikeBtn';
 import FavoriteBtn from '../FavoriteBtn/FavoriteBtn';
+import swal from "sweetalert";
+
+
+const btnStyle = {
+    color: "black",
+};
+
+
+const profileIcon = {
+    width: '65',
+    height: '65'
+}
+
+const addBtn = {
+    backgroundColor: "#2F3F73",
+    color: '#a9a9a9'
+};
+
+const styleGrid = {
+    minWidth: '300px',
+    margin: 'auto'
+}
+
+const styleBtnCard = {
+    height: '10vh'
+}
+
+const styleContent = {
+    height: '40vh',
+    overflowY: 'scroll'
+}
+
+const styleCard = {
+    minWidth: "300px",
+    fontFamily: "Arial, Helvetica, sans - serif",
+    margin: "20px",
+    textAlign: "center",
+    border: "1px solid #2F3F73",
+};
 
 class Profiles extends Component {
 
@@ -31,17 +70,16 @@ class Profiles extends Component {
         }
     }
 
-    componentWillMount = () => {
-        this.props.dispatch({ type: "FETCH_STATUS" });
-    }
 
 // get profiles and status on page load
   componentDidMount = () => {
     this.props.dispatch({ type: "FETCH_PROFILE", payload: this.props.user.id });
+    this.props.dispatch({ type: 'FETCH_STATUS',  payload: this.props.user.id });
   };
 
   handleDelete = (profile) => {
         this.props.dispatch({ type: "DELETE_PROFILE", payload: profile.id });
+        swal("Profile has been deleted!");
     };
 
    handleEdit = (profile) => {
@@ -58,45 +96,50 @@ class Profiles extends Component {
     let profileDisplay = this.props.newProfile.map(profile => {
         return <Grid key={profile.id} style={styleGrid} item xs={3}>
             <Card style={styleCard}>
-          <CardActionArea>
-              <CardMedia component="img" alt="Profile created" image={profile.image_url} height="250" title="Profile created" />
-            <CardContent style={styleContent}>
+              <CardActionArea>
+                <CardMedia 
+                component="img" 
+                alt="Profile created" 
+                image={profile.image_url} 
+                height="250" 
+                title="Profile created" />
+                <CardContent style={styleContent}>
                   <Typography gutterBottom variant="h5" component="h2">
-                <h4>{profile.name}</h4>
-                <p className="title">{profile.title}</p>
-              </Typography>
-              <Typography component="p">
-                      <b>Date of Encounter</b> - {moment(profile.date_of_encounter).format('LL')}
-                <br />
-                <br />
-              </Typography>
-              <Typography component="p">
-                <b>Location</b> - {profile.location}
-                <br />
-                <br />
-                <b>Relation</b> - {profile.relation}
-                <br />
-                <br />
-                <b>Misc Comments</b> - {profile.misc}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions style={styleBtnCard}>
-            <FavoriteBtn profileItem={profile} status ={this.state}/>
-                    <DislikeBtn profileItem={profile} status={this.state}/>
-            <Tooltip title="Edit">
-              <IconButton aria-label="Edit">
-                <BorderColor onClick={() => this.handleEdit(profile)} style={btnStyle} />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Delete">
-              <IconButton aria-label="Delete">
-                <DeleteIcon onClick={() => this.handleDelete(profile)} style={btnStyle} />
-              </IconButton>
-            </Tooltip>
-          </CardActions>
-        </Card>
-        </Grid>;
+                    <h4>{profile.name}</h4>
+                    <p className="title">{profile.title}</p>
+                  </Typography>
+                  <Typography component="p">
+                    <b>Date of Encounter</b> - {moment(profile.date_of_encounter).format("LL")}
+                    <br />
+                    <br />
+                  </Typography>
+                  <Typography component="p">
+                    <b>Location</b> - {profile.location}
+                    <br />
+                    <br />
+                    <b>Relation</b> - {profile.relation}
+                    <br />
+                    <br />
+                    <b>Misc Comments</b> - {profile.misc}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+              <CardActions style={styleBtnCard}>
+                <FavoriteBtn profileItem={profile} status={this.state} />
+                <DislikeBtn profileItem={profile} status={this.state} />
+                <Tooltip title="Edit">
+                  <IconButton aria-label="Edit">
+                    <BorderColor onClick={() => this.handleEdit(profile)} style={btnStyle} />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Delete">
+                  <IconButton aria-label="Delete">
+                    <DeleteIcon onClick={() => this.handleDelete(profile)} style={btnStyle} />
+                  </IconButton>
+                </Tooltip>
+              </CardActions>
+            </Card>
+          </Grid>;
     });
     return <div>
         <center>
@@ -116,46 +159,10 @@ class Profiles extends Component {
       </div>;
   }
 }
-const btnStyle = {
-  color: "black",
-};
-
-
-const profileIcon = {
-    width: '65',
-    height: '65'
-}
-
-const addBtn = {
-  backgroundColor: "#2F3F73",
-    color: '#a9a9a9'
-};
-
-const styleGrid = {
-    minWidth: '300px',
-    margin: 'auto'
-}
-
-const styleBtnCard = {
-    height: '10vh'
-}
-
-const styleContent = {
-    height: '40vh',
-    overflowY: 'scroll'
-}
-
-  const styleCard = {
-     minWidth: "300px",
-     fontFamily: "Arial, Helvetica, sans - serif",
-     margin: "20px",
-     textAlign: "center",
-     border: "1px solid #2F3F73",
-};
 
 const mapStateToProps = (reduxStore) => ({
     user: reduxStore.user,
-    newProfile: reduxStore.profileReducer
+    newProfile: reduxStore.profileReducer,
 });
 
 export default connect(mapStateToProps)(withRouter(Profiles));

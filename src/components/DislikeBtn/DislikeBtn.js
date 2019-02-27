@@ -8,6 +8,12 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 class DislikeBtn extends Component {
 
+    // get profiles and status on page load
+    componentDidMount = () => {
+        this.props.dispatch({ type: "FETCH_PROFILE", payload: this.props.user.id });
+        this.props.dispatch({ type: 'FETCH_STATUS', payload: this.props.user.id });
+    };
+
 
     state = {
         changeColor: this.props.profileItem.status_id,
@@ -15,7 +21,6 @@ class DislikeBtn extends Component {
 
 
     handleClick = (boolean) => {
-
         this.props.dispatch({
             type: "NEGATIVE_STATUS", payload: { status: this.props.status.negativeStatus, id: this.props.profileItem.id }
         });
@@ -23,7 +28,6 @@ class DislikeBtn extends Component {
             changeColor: boolean,
         })
     }
-
 
 render() {
         let button;
@@ -54,7 +58,8 @@ const btnStyle = {
 
 
 const mapStateToProps = (reduxStore) => ({
-    profile: reduxStore.profileReducer
+    profile: reduxStore.profileReducer,
+    user: reduxStore.user
 });
 
 export default connect(mapStateToProps)(DislikeBtn);
