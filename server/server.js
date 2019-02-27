@@ -12,8 +12,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const ProfileRouter = require('./routes/profile.router');
 const statusRouter = require('./routes/status.router');
-const favoritesRouter = require('./routes/favorites.router');
-const dislikesRouter = require('./routes/dislikes.router');
+const editRouter = require('./routes/edit.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -30,14 +29,13 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/profile', ProfileRouter);
 app.use('/api/status', statusRouter);
-app.use('/api/favorites', favoritesRouter);
-app.use('/api/dislikes', dislikesRouter);
+app.use('/api/edit', editRouter);
 
 // Serve static files
 app.use(express.static('build'));
 
 // App Set //
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 /** Listen * */
 app.listen(PORT, () => {

@@ -1,23 +1,35 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: monospace;
     margin: 0px;
+    font-size: 20px;
+    background-color: #fafdfc;
+}
+
+.header {
+  text-decoration: none;
+  font-size: 36px;
+  color: #2c3f72;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
 }
 
 .alert {
-    background-color: #ff4545;
-    margin: 50px;
+  font-family: monospace;
+    color :red;
+    text-align: center;
 }
 
-form {
-    background-color: #dbd5d5;
-    width: 30%;
+
+login {
+    background-color: #fafdfc;
+    width: 60%;
     height: 250px;
     margin: 20px auto;
     padding: 25px;
     border-radius: 2px;
 }
 
-input {
+.login {
     margin: 5px;
     margin-bottom: 10px;
 }
@@ -25,7 +37,7 @@ input {
 .log-in, .log-out, .register {
   background-color: #00acb0;
   border-radius: 4px;
-  color: #f8f8f8;
+  color: #fafdfc;
   min-height: 50px;
   min-width: 100px;
   outline:0;

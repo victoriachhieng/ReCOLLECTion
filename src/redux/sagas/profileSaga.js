@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { call, takeEvery, put as dispatch } from 'redux-saga/effects';
+import swal from "sweetalert";
 
 // generator with axios GET call to get DB from projects
-function* fetchProfiles() {
+function* fetchProfiles(action) {
     try{
-        const profileResponse = yield call(axios.get, 'api/profile');
+        const profileResponse = yield call(axios.get, `api/profile/${action.payload}`);
         yield dispatch({ type: 'SET_PROFILES', payload: profileResponse.data });
     } catch (error) {
         console.log('error in fetchProfiles saga', error);
@@ -19,6 +20,12 @@ function* postProfiles(action) {
         yield call(axios.post, '/api/profile', action.payload);
         // Reupdate state
         yield dispatch({ type: 'FETCH_PROFILE' })
+        swal({
+          title: "You have successfully submitted a new Profile!",
+          text: "Let's check it out!",
+          icon: "success",
+          button: "Ok"
+        });
     } catch (error) {
         console.log('in postProfile error', error);
     }
@@ -38,10 +45,10 @@ function* deleteProfiles(action) {
 // generator with axios PUT
 function* editProfiles(action) {
     try {
-        yield call(axios.put, `/api/profile/${action.payload.id}`, action.payload);
-        yield dispatch({ type: 'FETCH_PROFILE' });
+        yield call(axios.put, `/api/edit/${action.payload.id}`, action.payload);
+        yield dispatch({ type: 'EDIT_PROFILE' });
     } catch (error) {
-        console.log('error in edit saga', error);
+        console.log('error in editProfile saga', error);
     }
 }
 

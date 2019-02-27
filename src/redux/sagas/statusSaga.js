@@ -52,6 +52,7 @@ function* statusSaga() {
     yield takeEvery('POSITIVE_STATUS', positiveStatus);
     yield takeEvery('NEGATIVE_STATUS', negativeStatus);
     yield takeEvery('NEUTRAL_STATUS', neutralStatus);
+
 }
 
 export default statusSaga;
