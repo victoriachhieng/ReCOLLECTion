@@ -13,7 +13,6 @@ ReCOLLECTion allows you to recollect information from individuals you have met b
 * HTML
 * Javascript
 * CSS
-* Sweetalert
 * Moment
 * Material UI
 
