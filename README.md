@@ -1,22 +1,4 @@
-## Screenshots
-
-Admin Home:\
-<img src="public/screenshots/adminhome.png" width="250px">
-
-Admin Manage Users:\
-<img src="public/screenshots/users.png" width="250px">
-
-Admin Manage Locations:\
-<img src="public/screenshots/locations.png" width="250px">
-
-Admin Reports:\
-<img src="public/screenshots/reports.png" width="250px">
-
-OnSite Home:\
-<img src="public/screenshots/onsitehome.png" width="250px">
-
-OnSite Count:\
-<img src="public/screenshots/onsitecount.png" width="250px">## ReCOLLECTion 1.0
+## ReCOLLECTion 1.0
 ReCOLLECTion allows you to recollect information from individuals you have met briefly, remember their names, build your network, grow meaningful relationships, have a solid foundation, and less awkward conversations. This will build your confidence tremendously because you are given access to conversations you may have not remembered in the past. You are less likely to approach an individual who you’ve encountered due to the lack of memory of who this person may be, am I correct? Once logged in, Users will have access to create Profiles of whomever you’d like. Users will be able to copy and paste the URL of an image, but how you get the image is up to your discretion. There will be sections that you’d fill out to get started. When satisfied with results, Users can edit, add to favorites, dislike or delete the profile. 
 
 ## Built With:
