@@ -1,13 +1,20 @@
-# Prime Project
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+## ReCOLLECTion 1.0
+ReCOLLECTion allows you to recollect information from individuals you have met briefly, remember their names, build your network, grow meaningful relationships, have a solid foundation, and less awkward conversations. This will build your confidence tremendously because you are given access to conversations you may have not remembered in the past. You are less likely to approach an individual who you’ve encountered due to the lack of memory of who this person may be, am I correct? Once logged in, Users will have access to create Profiles of whomever you’d like. Users will be able to copy and paste the URL of an image, but how you get the image is up to your discretion. There will be sections that you’d fill out to get started. When satisfied with results, Users can edit, add to favorites, dislike or delete the profile. 
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+## Built With:
 
-## Download (Don't Clone) This Repository
-
-* Don't Fork or Clone. Instead, click the `Clone or Download` button and select `Download Zip`.
-* Unzip the project and start with the code in that folder.
-* Create a new GitHub project and push this code to the new repository.
+* React
+* Redux-Saga
+* Node
+* Express
+* Axios
+* Postico
+* PostgreSQL
+* HTML
+* Javascript
+* CSS
+* Moment
+* Material UI
 
 ## Prerequisites
 
@@ -19,7 +26,7 @@ Before you get started, make sure you have the following software installed on y
 
 ## Create database and table
 
-Create a new database called `prime_app` and create a `person` table:
+Create a new database called `prime_app` and create tables:
 
 ```SQL
 CREATE TABLE "person" (
@@ -27,9 +34,41 @@ CREATE TABLE "person" (
     "username" VARCHAR (80) UNIQUE NOT NULL,
     "password" VARCHAR (1000) NOT NULL
 );
+
+CREATE TABLE "profiles" (
+    "id" SERIAL PRIMARY KEY,
+    "image_url" character varying(5000),
+    "name" varying(350),
+    "title" character varying(350),
+    "date_of_encounter" date,
+    "location" character varying(500),
+    "relation" character varying(1000),
+    "misc" character varying(2000),
+    "person_id" integer REFERENCES person(id),
+    "status_id" integer REFERENCES status(id) DEFAULT 2
+);
+
+CREATE TABLE "status" (
+    "id" SERIAL PRIMARY KEY,
+    "type" VARCHAR (100)
+);
 ```
 
 If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
+
+## Documentation
+https://docs.google.com/document/d/1Zmv_Es6JFfCM9S-_NB-5qrOM2QxcMOrl91eAAu6e1E4/edit#heading=h.x5497hm2698b
+
+### Completed Features
+
+* Add/Edit/Delete Profiles
+* Favorite icon adds Profile to their Favorites, if heart icon is selected, heart icon turns red
+* Deselect Profile from Favorites by deselecting heart icon, Profile will be removed from Favorites 
+* Dislike Profile by selecting the thumbs down icon, icon turns to dark blue
+
+### Next Steps
+* Implement FullContact API to profiles
+* Notification reminder to follow up with individuals 
 
 ## Development Setup Instructions
 
@@ -44,56 +83,5 @@ If you would like to name your database something else, you will need to change 
 * Run `npm run client`
 * Navigate to `localhost:3000`
 
-## Debugging
-
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
-
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
-
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
-
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
-
-
-## Production Build
-
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
-
-* Start postgres if not running already by using `brew services start postgresql`
-* Run `npm start`
-* Navigate to `localhost:5000`
-
-## Lay of the Land
-
-* `src/` contains the React application
-* `public/` contains static assets for the client-side
-* `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-* `server/` contains the Express App
-
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
-
-* src/components
-  * App/App
-  * Footer/Footer
-  * Nav/Nav
-  * AboutPage/AboutPage
-  * InfoPage/InfoPage
-  * UserPage/UserPage
-  * LoginPage/LoginPage
-  * RegisterPage/RegisterPage
-  * LogOutButton/LogOutButton
-  * ProtectedRoute/ProtectedRoute
-
-## Deployment
-
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+## Author
+Victoria Chhieng
